@@ -32,7 +32,7 @@ public abstract class Joueur {
     /**
      * 
      */
-    protected static Divinite divinité;
+    protected static Divinite divinitÃ©;
 
     /**
      * 
@@ -96,6 +96,11 @@ public abstract class Joueur {
      */
     public void remplirMain() {
         // TODO implement here
+	 int i = this.main.size();
+    	while (i < 7) {
+    	this.main.add(Divinae.paquet.poll());
+    	i++;
+    	}
     }
 
     /**
