@@ -125,9 +125,17 @@ public abstract class Joueur {
     /**
      * @return
      */
-    public int recupererPriere() {
-        // TODO implement here
-        return 0;
+    public int calculerPriere() {
+        Guide g;
+        int priere = 0;
+		for (Iterator it = plateau.iterator(); it.hasNext();)
+			g = (Guide) it.next();
+        	for (Iterator itCroyant = g.croyants.iterator(); itCroyant.hasNext();){
+        		Croyant c = (Croyant) itCroyant.next();
+        		priere += c.getNbCroyant();
+        	}
+    	this.nbPriere = priere;
+        return priere;
     }
 
     /**
@@ -135,4 +143,8 @@ public abstract class Joueur {
      */
     public enum Types {
     }
+    
+    public static void main(String[] args) {
+		System.out.println(Divinae.getPaquet());
+	}
 }

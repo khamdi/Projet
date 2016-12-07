@@ -107,6 +107,10 @@ public class Croyant extends Personnage {
     	return tmp;
     }
 
+    public int getNbCroyant() {
+		return nbCroyant;
+	}
+    
     /**
      * @param return
      */

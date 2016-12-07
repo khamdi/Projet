@@ -2,6 +2,8 @@ package fr.utt.a16.lo02.projet;
 
 import java.util.*;
 
+import sun.java2d.Disposer.PollDisposable;
+
 public class Divinae {
 	private boolean partieEnCours;
 	private Joueur premierJoueur;
@@ -39,7 +41,8 @@ public class Divinae {
 		
 		return tmp;
 	}
-
+	
+	// pourquoi toujours la meme carte dans la liste ?
 	private static LinkedList<Action> creationPaquet (){
 		LinkedList<Action> tmp = new LinkedList<>();
 		
@@ -57,10 +60,16 @@ public class Divinae {
 		// TODO implement here
 		return null;
 	}
-	//change
+
 	private static Origine lanceDee(){
-		Origine[] origines = Origine.values(); 
-		return origines[(new Random()).nextInt(origines.length)];
+		switch(new Random().nextInt(3)){
+			case 0 :
+				return Origine.Jour;
+			case 1 :
+				return Origine.Nuit;
+			default :
+				return Origine.Neant;
+		}
 	}
 	
 	//pas finis 
@@ -122,8 +131,8 @@ public class Divinae {
      */
     public void distributCarteAction(Joueur joueur) {
     	Iterator<Joueur> it = this.joueurs.iterator();
-    	for (Joueur j = it.next(); it.hasNext(); j = it.next()){
-    		for (int i = 0; i < 7; i++){
+    	for (int i = 0; i < 7; i++){
+    		for (Joueur j = it.next(); it.hasNext(); j = it.next()){
     			j.main.add(this.paquet.poll());
     		}
     	}
