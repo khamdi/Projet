@@ -38,8 +38,9 @@ public class Apocalypse extends Action {
     		min = points[i];
     		j = i ; 
     		}
+    	}
     	System.out.println("Le joueur " + Divinae.joueurs.get(j) + " a remporté la partie !" );
-    	 }
+    	Divinae.partieEnCours = false ;
     }	
     	else{//3 joueurs ou moins : le joueur ayant le plus de pts de prière gagne la partie
     		// calcul la valeur la plus petite du tableau  
