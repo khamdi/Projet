@@ -5,5 +5,6 @@ public enum Origine {
 	Nuit,
 	Neant,
 	Aube,
-	Crepuscule
+	Crepuscule,
+	Vide
 }

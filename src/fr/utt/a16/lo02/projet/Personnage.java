@@ -2,7 +2,7 @@ package fr.utt.a16.lo02.projet;
 
 import java.util.*;
 
-public class Personnage extends Action {
+public abstract class Personnage extends Action {
 	/**
      * Default constructor
      */
@@ -21,4 +21,6 @@ public class Personnage extends Action {
      * 
      */
     public List<Dogmes> dogmes;
+	@Override
+	public abstract void jouerCarteAction();
 }

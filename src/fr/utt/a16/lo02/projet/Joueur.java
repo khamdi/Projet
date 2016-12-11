@@ -1,19 +1,25 @@
 package fr.utt.a16.lo02.projet;
 
 import java.util.*;
-
+import fr.utt.a16.lo02.projet.Divinae.*;
 public abstract class Joueur {
 	/**
      * Default constructor
      */
-    public Joueur() {
-    	
+    public Joueur(String nom, Types type) {
+    	this.nom = nom;
     	this.gainPtAction = true;
     	this.dejaJoue = false;
     	this.nbPriere = 0;
     	this.sacrificeCroyant = false;
     	this.sacrifieGuide = false;
+    	this.plateau = new ArrayList();
+    	this.main = new ArrayList();
+    	this.action = new int[3];
+    	this.typeJoueur = type;
     }
+    
+    private String nom;
 
     /**
      * 
@@ -33,17 +39,17 @@ public abstract class Joueur {
     /**
      * 
      */
-    protected int action;
+    protected int[] action;
 
     /**
      * 
      */
-    protected static Divinite divinite;
+    protected Divinite divinite;
 
     /**
      * 
      */
-    public static Types typeJoueur;
+    public Types typeJoueur;
 
     /**
      * 
@@ -71,19 +77,19 @@ public abstract class Joueur {
      * @param cartesDefausse 
      * @return
      */
-    public abstract void defausse(List<Action> cartesDefausse);
+    public abstract void defausse();
 
     /**
      * @param carte 
      * @return
      */
-    public abstract void jouerCarte(Action carte);
+    public abstract void jouerCarte();
 
     /**
      * @param carte 
      * @return
      */
-    public abstract void activeCarte(Carte carte);
+    public abstract void activeCarte();
 
     /**
      * @param joueur 
@@ -101,16 +107,40 @@ public abstract class Joueur {
      * @return
      */
     public void remplirMain() {
-        // TODO implement here
+    	while (this.main.size() < 7){
+    		this.main.add(Divinae.piocherCarte());
+    	}
     }
-
+    
+    public boolean encorePtAction(){
+		if (this.action[Origine.Jour.ordinal()] > 0 || this.action[Origine.Nuit.ordinal()] > 0 || this.action[Origine.Neant.ordinal()] > 0 )
+			return true;
+		return false;
+	}
+    
+    public boolean checkGagnant(){
+    	Iterator it;
+    	boolean gagnant = true;
+    	Joueur j;
+    	for (it = Divinae.joueurs.iterator(); it.hasNext();){
+    		j = (Joueur) it.next();
+    		j.calculerPriere();
+    	}
+    	for (it = Divinae.joueurs.iterator(); it.hasNext();){
+    		j = (Joueur) it.next();
+    		if (this.nbPriere < j.nbPriere)
+    			gagnant = false;
+    	}
+    	return gagnant;
+    }
+    
     /**
      * @param origineAction 
      * @param nbAction 
      * @return
      */
     public void ajoutAction(Origine origineAction, int nbAction) {
-        // TODO implement here
+        this.action[origineAction.ordinal()] += nbAction;
     }
 
     /**
@@ -119,32 +149,42 @@ public abstract class Joueur {
      * @return
      */
     public void retireAction(Origine origineAction, int nbAction) {
-        // TODO implement here
+    	 if (this.action[origineAction.ordinal()] > nbAction)
+    		 this.action[origineAction.ordinal()] -= nbAction;
+    	 this.action[origineAction.ordinal()] = 0;
+    	 
     }
 
     /**
      * @return
      */
-    public int calculerPriere() {
-        Guide g;
+    public void calculerPriere() {
         int priere = 0;
-		for (Iterator it = plateau.iterator(); it.hasNext();)
-			g = (Guide) it.next();
+		for (Iterator it = plateau.iterator(); it.hasNext();){
+			Guide g = (Guide) it.next();
         	for (Iterator itCroyant = g.croyants.iterator(); itCroyant.hasNext();){
         		Croyant c = (Croyant) itCroyant.next();
         		priere += c.getNbCroyant();
         	}
+		}
     	this.nbPriere = priere;
-        return priere;
+    }
+    
+    public String getNom (){
+    	return this.nom;
     }
 
     /**
      * 
      */
     public enum Types {
+    	Reel,
+    	IA
     }
-    
+    @Override
+    public String toString() {
+    	return this.nom + " : " + this.divinite.origine + " " + this.divinite.nomCarte;
+    }
     public static void main(String[] args) {
-		System.out.println(Divinae.getPaquet());
 	}
 }

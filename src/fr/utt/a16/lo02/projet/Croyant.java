@@ -40,7 +40,7 @@ public class Croyant extends Personnage {
     	tmp.add(new Croyant(numCarte++,"Moines",Origine.Jour,Dogmes.Chaos,Dogmes.Mystique,Dogmes.Symnoles,2));
         tmp.add(new Croyant(numCarte++,"Moines",Origine.Jour,Dogmes.Nature,Dogmes.Mystique,Dogmes.Symnoles,2));
         tmp.add(new Croyant(numCarte++,"Moines",Origine.Jour,Dogmes.Nature,Dogmes.Mystique,Dogmes.Chaos,2));
-        		
+        	
         		//Travailleurs
         tmp.add(new Croyant(numCarte++,"Travailleurs",Origine.Jour,Dogmes.Chaos,Dogmes.Symnoles,Dogmes.Humain,2));
         tmp.add(new Croyant(numCarte++,"Travailleurs",Origine.Jour,Dogmes.Nature,Dogmes.Symnoles,Dogmes.Humain,2));
@@ -50,8 +50,8 @@ public class Croyant extends Personnage {
         tmp.add(new Croyant(numCarte++,"Ermite",Origine.Jour,Dogmes.Nature,Dogmes.Mystique,Dogmes.Chaos,1));
         tmp.add(new Croyant(numCarte++,"Ermite",Origine.Jour,Dogmes.Symnoles,Dogmes.Mystique,Dogmes.Nature,1));
         		
-        		//Intégristes
-        tmp.add(new Croyant(numCarte++,"Intégristes",Origine.Jour,Dogmes.Nature,Dogmes.Humain,Dogmes.Chaos,1));
+        		//Intï¿½gristes
+        tmp.add(new Croyant(numCarte++,"Intï¿½gristes",Origine.Jour,Dogmes.Nature,Dogmes.Humain,Dogmes.Chaos,1));
         		
         		//Guerriers Saints
         tmp.add(new Croyant(numCarte++,"Guerriers Saints",Origine.Jour,Dogmes.Nature,Dogmes.Mystique,Dogmes.Symnoles,4));
@@ -59,12 +59,12 @@ public class Croyant extends Personnage {
         		//Diplomates
         tmp.add(new Croyant(numCarte++,"Diplomates",Origine.Jour,Dogmes.Humain,Dogmes.Chaos,Dogmes.Symnoles,4));
         		
-        		//Démons
-        tmp.add(new Croyant(numCarte++,"Démons",Origine.Nuit,Dogmes.Nature,Dogmes.Mystique,Dogmes.Humain,2));
-        tmp.add(new Croyant(numCarte++,"Démons",Origine.Nuit,Dogmes.Chaos,Dogmes.Mystique,Dogmes.Symnoles,2));
-        tmp.add(new Croyant(numCarte++,"Démons",Origine.Nuit,Dogmes.Chaos,Dogmes.Mystique,Dogmes.Symnoles,2));
-        tmp.add(new Croyant(numCarte++,"Démons",Origine.Nuit,Dogmes.Nature,Dogmes.Mystique,Dogmes.Symnoles,2));
-        tmp.add(new Croyant(numCarte++,"Démons",Origine.Nuit,Dogmes.Nature,Dogmes.Mystique,Dogmes.Chaos,2));
+        		//Dï¿½mons
+        tmp.add(new Croyant(numCarte++,"Dï¿½mons",Origine.Nuit,Dogmes.Nature,Dogmes.Mystique,Dogmes.Humain,2));
+        tmp.add(new Croyant(numCarte++,"Dï¿½mons",Origine.Nuit,Dogmes.Chaos,Dogmes.Mystique,Dogmes.Symnoles,2));
+        tmp.add(new Croyant(numCarte++,"Dï¿½mons",Origine.Nuit,Dogmes.Chaos,Dogmes.Mystique,Dogmes.Symnoles,2));
+        tmp.add(new Croyant(numCarte++,"Dï¿½mons",Origine.Nuit,Dogmes.Nature,Dogmes.Mystique,Dogmes.Symnoles,2));
+        tmp.add(new Croyant(numCarte++,"Dï¿½mons",Origine.Nuit,Dogmes.Nature,Dogmes.Mystique,Dogmes.Chaos,2));
         		
         		//Alchimistes
         tmp.add(new Croyant(numCarte++,"Alchimistes",Origine.Nuit,Dogmes.Nature,Dogmes.Chaos,Dogmes.Symnoles,2));
@@ -91,32 +91,31 @@ public class Croyant extends Personnage {
         tmp.add(new Croyant(numCarte++,"Esprits",Origine.Neant,Dogmes.Nature,Dogmes.Mystique,Dogmes.Symnoles,2));
         tmp.add(new Croyant(numCarte++,"Esprits",Origine.Neant,Dogmes.Nature,Dogmes.Mystique,Dogmes.Chaos,2));
 
-        		//Aliénés
-        tmp.add(new Croyant(numCarte++,"Aliénés",Origine.Neant,Dogmes.Humain,Dogmes.Chaos,Dogmes.Symnoles,2));
-        tmp.add(new Croyant(numCarte++,"Aliénés",Origine.Neant,Dogmes.Nature,Dogmes.Humain,Dogmes.Symnoles,2));
-        tmp.add(new Croyant(numCarte++,"Aliénés",Origine.Neant,Dogmes.Humain,Dogmes.Mystique,Dogmes.Chaos,2));
+        		//Aliï¿½nï¿½s
+        tmp.add(new Croyant(numCarte++,"Aliï¿½nï¿½s",Origine.Neant,Dogmes.Humain,Dogmes.Chaos,Dogmes.Symnoles,2));
+        tmp.add(new Croyant(numCarte++,"Aliï¿½nï¿½s",Origine.Neant,Dogmes.Nature,Dogmes.Humain,Dogmes.Symnoles,2));
+        tmp.add(new Croyant(numCarte++,"Aliï¿½nï¿½s",Origine.Neant,Dogmes.Humain,Dogmes.Mystique,Dogmes.Chaos,2));
         		
         		//Revenant
         tmp.add(new Croyant(numCarte++,"Revenant",Origine.Neant,Dogmes.Nature,Dogmes.Mystique,Dogmes.Humain,1));
         		
-        		//Révolutionnaires
-        tmp.add(new Croyant(numCarte++,"Aliénés",Origine.Neant,Dogmes.Humain,Dogmes.Chaos,Dogmes.Symnoles,2));
+        		//Rï¿½volutionnaires
+        tmp.add(new Croyant(numCarte++,"Aliï¿½nï¿½s",Origine.Neant,Dogmes.Humain,Dogmes.Chaos,Dogmes.Symnoles,2));
         		
         		//Nihillistes
         tmp.add(new Croyant(numCarte++,"Nihillistes",Origine.Neant,Dogmes.Chaos,Dogmes.Mystique,Dogmes.Symnoles,4));
-    	return tmp;
+    	
+        return tmp;
     }
-
+    
     public int getNbCroyant() {
 		return nbCroyant;
 	}
     
-    /**
-     * @param return
-     */
-    public void jouerCroyant() {
-        // TODO implement here
-    }
+    @Override
+	public void jouerCarteAction() {
+		Divinae.table.add(this);
+	}
 
     /**
      * @param joueur 
@@ -302,10 +301,14 @@ public class Croyant extends Personnage {
         // TODO implement here
     }
     
-//    public static void main(String[] args) {
-//		int test = 1;
-//		System.out.println(test++);
-//		System.out.println(test);
-//	}
+    public static void main(String[] args) {
+//    	LinkedList<Croyant> tmp = new LinkedList<>();
+//    	tmp = creationCroyant();
+////    	tmp.addAll(creationCroyant());
+//    	System.out.println(tmp);
+//    	
+	}
 
+	
+    
 }

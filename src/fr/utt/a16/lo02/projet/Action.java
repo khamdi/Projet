@@ -1,12 +1,12 @@
 package fr.utt.a16.lo02.projet;
 
-public class Action extends Carte {
+public abstract class Action extends Carte {
 	/**
      * Default constructor
      */
     public Action(int numCarte, String nomCarte, Origine origine,TypesCartes typeCarte) {
         super(numCarte, nomCarte, typeCarte, origine);
-        // TODO Auto-generated constructor stub
+        this.enMain = false;
     }
 
 
@@ -14,31 +14,27 @@ public class Action extends Carte {
      * 
      */
     protected boolean enMain;
-
-    /**
-     * @return
-     */
-    public Action piocheCarte() {
-        // TODO implement here
-        return null;
-    }
-
-
-    /**
-     * @param return
-     */
-    public void defausseCarte() {
-        // TODO implement here
-    }
+    
+    
+    public void setEnMain() {
+		this.enMain = true;
+	}
 	
 	@Override
-	public void activeCapacite(Carte carte) {
+	public void activeCapacite() {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	
+	
+	public abstract void jouerCarteAction();
 
     public String toString() {
         return super.toString();
-    };
+    }
+
+
+	
 
 }

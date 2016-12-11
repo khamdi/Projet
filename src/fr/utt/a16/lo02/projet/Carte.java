@@ -16,17 +16,17 @@ public abstract class Carte {
     /**
      * 
      */
-    protected static Origine origine;
+    protected Origine origine;
 
     /**
      * 
      */
-    protected static TypesCartes typeCarte;
+    protected TypesCartes typeCarte;
 
     /**
      * 
      */
-    protected static String nomCarte;
+    protected String nomCarte;
 
     /**
      * 
@@ -36,7 +36,7 @@ public abstract class Carte {
     /**
      * 
      */
-    protected static int numCarte;
+    protected int numCarte;
 
 
 
@@ -44,11 +44,11 @@ public abstract class Carte {
      * @param carte 
      * @return
      */
-    public abstract void activeCapacite(Carte carte);
+    public abstract void activeCapacite();
     
     @Override
     public String toString() {
-    	return "[ " + this.origine + " " + nomCarte ;
+    	return this.origine + " " + nomCarte ;
     }
 
 }

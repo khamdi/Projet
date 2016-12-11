@@ -18,24 +18,24 @@ public class DeusEx extends Action {
     	LinkedList<DeusEx> tmp = new LinkedList<>();
     	int nbCarte = DEBUTNBCARTE;
     	
-    	tmp.add(new DeusEx (nbCarte++,"colère divine",Origine.Jour));
-    	tmp.add(new DeusEx (nbCarte++,"colère divine",Origine.Nuit));
+    	tmp.add(new DeusEx (nbCarte++,"colï¿½re divine",Origine.Jour));
+    	tmp.add(new DeusEx (nbCarte++,"colï¿½re divine",Origine.Nuit));
     	tmp.add(new DeusEx (nbCarte++,"stase",Origine.Jour));
-    	tmp.add(new DeusEx (nbCarte++,"ordre céleste",Origine.Jour));
+    	tmp.add(new DeusEx (nbCarte++,"ordre cï¿½leste",Origine.Jour));
     	tmp.add(new DeusEx (nbCarte++,"fourberie",Origine.Nuit));
     	tmp.add(new DeusEx (nbCarte++,"diversion",Origine.Nuit));
     	tmp.add(new DeusEx (nbCarte++,"concentration",Origine.Neant));
     	tmp.add(new DeusEx (nbCarte++,"trou noir",Origine.Neant));
     	tmp.add(new DeusEx (nbCarte++,"phoenix",Origine.Neant));
-    	tmp.add(new DeusEx (nbCarte++,"influence jour",null));
-    	tmp.add(new DeusEx (nbCarte++,"influence nuit",null));
-    	tmp.add(new DeusEx (nbCarte++,"influence néant",null));
-    	tmp.add(new DeusEx (nbCarte++,"influence nulle",null));
-    	tmp.add(new DeusEx (nbCarte++,"influence nulle",null));
-    	tmp.add(new DeusEx (nbCarte++,"transe",null));
-    	tmp.add(new DeusEx (nbCarte++,"miroir",null));
-    	tmp.add(new DeusEx (nbCarte++,"bouleversement",null));
-    	tmp.add(new DeusEx (nbCarte++,"inquisition",null));	
+    	tmp.add(new DeusEx (nbCarte++,"influence jour",Origine.Vide));
+    	tmp.add(new DeusEx (nbCarte++,"influence nuit",Origine.Vide));
+    	tmp.add(new DeusEx (nbCarte++,"influence nï¿½ant",Origine.Vide));
+    	tmp.add(new DeusEx (nbCarte++,"influence nulle",Origine.Vide));
+    	tmp.add(new DeusEx (nbCarte++,"influence nulle",Origine.Vide));
+    	tmp.add(new DeusEx (nbCarte++,"transe",Origine.Vide));
+    	tmp.add(new DeusEx (nbCarte++,"miroir",Origine.Vide));
+    	tmp.add(new DeusEx (nbCarte++,"bouleversement",Origine.Vide));
+    	tmp.add(new DeusEx (nbCarte++,"inquisition",Origine.Vide));	
     	
     	return tmp;
     }
@@ -188,4 +188,10 @@ public class DeusEx extends Action {
     public void capaciteInquisition(Joueur joueur, Guide guide) {
         // TODO implement here
     }
+
+	@Override
+	public void jouerCarteAction() {
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -16,11 +16,16 @@ public class Guide extends Personnage {
     private int maxCroyant;
     
     private static int DEBUTNBCARTE = 300;
-
+    
+    
     /**
      * 
      */
     public List<Croyant> croyants;
+    
+    public int getMaxCroyant(){
+    	return this.maxCroyant;
+    }
 
     /**
      * @param return
@@ -57,8 +62,8 @@ public class Guide extends Personnage {
     	//Paladin
     	tmp.add(new Guide(numCarte++,"Paladin",Origine.Jour,Dogmes.Mystique,Dogmes.Humain,3));
     	
-    	//Ascète
-    	tmp.add(new Guide(numCarte++,"Ascète",Origine.Nuit,Dogmes.Symnoles,Dogmes.Humain,1));
+    	//Ascï¿½te
+    	tmp.add(new Guide(numCarte++,"Ascï¿½te",Origine.Nuit,Dogmes.Symnoles,Dogmes.Humain,1));
     	
     	//Devin
     	tmp.add(new Guide(numCarte++,"Devin",Origine.Neant,Dogmes.Nature,Dogmes.Mystique,1));
@@ -75,24 +80,28 @@ public class Guide extends Personnage {
     	//Messie
     	tmp.add(new Guide(numCarte++,"Messie",Origine.Jour,Dogmes.Mystique,Dogmes.Humain,3));
     	
-    	
     	return tmp;
     }
 
+    @Override
+	public void jouerCarteAction() {
+    	
+	}
+    
+    
     /**
      * @param croyants 
      * @return
      */
     public void ajoutCroyant(List<Croyant> croyants) {
-        // TODO implement here
+        this.croyants.addAll(croyants);
     }
 
     /**
      * @return
      */
-    public Croyant retirerCroyant() {
-        // TODO implement here
-    	return null;
+    public Croyant retirerCroyant(Croyant croyant) {
+        return this.croyants.remove(this.croyants.indexOf(croyant));
     }
 
     /**
@@ -182,4 +191,6 @@ public class Guide extends Personnage {
     public void capaciteMessie(Joueur joueur) {
         // TODO implement here
     }
+
+	
 }
