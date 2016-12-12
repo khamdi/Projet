@@ -58,7 +58,7 @@ public class Divinite extends Carte {
      * @return
      */
     public void capaciteBrawalen(Joueur joueur, Apocalypse carteApocalypste) {
-        // TODO implement here
+//peut emp�cher l'utilisation d'une carte Apocalypse.La carte est d�fauss�e
     }
 
     /**
@@ -67,7 +67,7 @@ public class Divinite extends Carte {
      * @return
      */
     public void capaciteShingva(Joueur joueur, Guide carteGuide) {
-        // TODO implement here
+//Peut imposer le sacrifice d'un Guide Spirituel ayant le Dogme Symboles ou Nature
     }
 
     /**
@@ -75,7 +75,10 @@ public class Divinite extends Carte {
      * @return
      */
     public void capaciteLlewella(Joueur joueur) {
-        // TODO implement here
+//Peut obliger un joueur � poser une carte Apocalypse s'il en poss�de une
+    	if (joueur.main.contains(typeCarte.Apocalypse) == true) {
+    		//Apocalypse.creation() ; chercher la carte et l'activer;
+    	  }
     }
 
     /**
@@ -84,7 +87,7 @@ public class Divinite extends Carte {
      * @return
      */
     public void capaciteDrinded(Joueur joueur, Guide carteGuide) {
-        // TODO implement here
+//peut emp�cher le sacrifice d'un des Guides Spirituels de n'importe quel joueur
     }
 
     /**
@@ -92,21 +95,24 @@ public class Divinite extends Carte {
      * @return
      */
     public void capaciteGorpa(Joueur joueur) {
-        // TODO implement here
+//Peut r�cup�rer les points d'Action d'une autre Divinit� en plus des siens. L'autre Divinit� ne
+//re�oit aucun point d'Action ce tour-ci.
+ 
     }
 
     /**
      * @return
      */
     public void capacitePuiTara() {
-        // TODO implement here
+//Peut d�truire toutes les cartes de Croyants au centre de la table d'Origine Jour
     }
 
     /**
      * @return
      */
     public void capaciteYarstur() {
-        // TODO implement here
+//Peut d�truire toutes les cartes de Croyants au centre de la table d'Origine N�ant.
+ Divinae.cimetiere.addAll(null);
     }
 
     /**
@@ -114,7 +120,7 @@ public class Divinite extends Carte {
      * @return
      */
     public void capaciteRomtec(Joueur joueur) {
-        // TODO implement here
+//Peut emp�cher un jour de cr�er un Guide Spirituel. La carte est d�fauss�e
     }
 
     /**
@@ -122,7 +128,9 @@ public class Divinite extends Carte {
      * @return
      */
     public void capaciteGwenghelen(Joueur joueur) {
-        // TODO implement here
+//R�cup�re autant de points d'Action suppl�mentaires d'Origine N�ant que le nombre de
+//Guides Spirituels que la Divinit� poss�de.
+joueur.action[2] += joueur.plateau.size();
     }
 
     /**
@@ -130,7 +138,10 @@ public class Divinite extends Carte {
      * @return
      */
     public void capaciteKillinstred(Joueur joueur) {
-        // TODO implement here
+//peut obliger un joueur � poser une carte Apocalypse s'il en poss�de une.
+if (joueur.main.contains(typeCarte.Apocalypse) == true) {
+//	Apocalypse.apocalypse() ; Pareil 
+  }
     }
     
     @Override
