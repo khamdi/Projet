@@ -1,4 +1,4 @@
-package fr.utt.a16.lo02.projet;
+package test;
 
 import java.util.*;
 
@@ -71,7 +71,7 @@ public class Divinite extends Carte {
      * @return
      */
     public void capaciteBrawalen(Joueur joueur, Apocalypse carteApocalypste) {
-        // TODO implement here
+//peut empêcher l'utilisation d'une carte Apocalypse.La carte est défaussée
     }
 
     /**
@@ -80,7 +80,7 @@ public class Divinite extends Carte {
      * @return
      */
     public void capaciteShingva(Joueur joueur, Guide carteGuide) {
-        // TODO implement here
+//Peut imposer le sacrifice d'un Guide Spirituel ayant le Dogme Symboles ou Nature
     }
 
     /**
@@ -88,7 +88,10 @@ public class Divinite extends Carte {
      * @return
      */
     public void capaciteLlewella(Joueur joueur) {
-        // TODO implement here
+//Peut obliger un joueur à poser une carte Apocalypse s'il en possède une
+    	if (joueur.main.contains(typeCarte.Apocalypse) == true) {
+    		Apocalypse.apocalypse() ;
+    	  }
     }
 
     /**
@@ -97,7 +100,7 @@ public class Divinite extends Carte {
      * @return
      */
     public void capaciteDrinded(Joueur joueur, Guide carteGuide) {
-        // TODO implement here
+//peut empêcher le sacrifice d'un des Guides Spirituels de n'importe quel joueur
     }
 
     /**
@@ -105,21 +108,24 @@ public class Divinite extends Carte {
      * @return
      */
     public void capaciteGorpa(Joueur joueur) {
-        // TODO implement here
+//Peut récupérer les points d'Action d'une autre Divinité en plus des siens. L'autre Divinité ne
+//reçoit aucun point d'Action ce tour-ci.
+ 
     }
 
     /**
      * @return
      */
     public void capacitePuiTara() {
-        // TODO implement here
+//Peut détruire toutes les cartes de Croyants au centre de la table d'Origine Jour
     }
 
     /**
      * @return
      */
     public void capaciteYarstur() {
-        // TODO implement here
+//Peut détruire toutes les cartes de Croyants au centre de la table d'Origine Néant.
+ Divinae.cimetiere.addAll(null);
     }
 
     /**
@@ -127,7 +133,7 @@ public class Divinite extends Carte {
      * @return
      */
     public void capaciteRomtec(Joueur joueur) {
-        // TODO implement here
+//Peut empêcher un jour de créer un Guide Spirituel. La carte est défaussée
     }
 
     /**
@@ -135,7 +141,9 @@ public class Divinite extends Carte {
      * @return
      */
     public void capaciteGwenghelen(Joueur joueur) {
-        // TODO implement here
+//Récupère autant de points d'Action supplémentaires d'Origine Néant que le nombre de
+//Guides Spirituels que la Divinité possède.
+joueur.action[2] += joueur.plateau.size();
     }
 
     /**
@@ -143,7 +151,10 @@ public class Divinite extends Carte {
      * @return
      */
     public void capaciteKillinstred(Joueur joueur) {
-        // TODO implement here
+//peut obliger un joueur à poser une carte Apocalypse s'il en possède une.
+if (joueur.main.contains(typeCarte.Apocalypse) == true) {
+	Apocalypse.apocalypse() ;
+  }
     }
     
     @Override
