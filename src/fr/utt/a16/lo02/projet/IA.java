@@ -2,10 +2,8 @@ package fr.utt.a16.lo02.projet;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Random;
 
-import sun.security.jca.GetInstance.Instance;
 
 public class IA extends Joueur {
 	
@@ -56,15 +54,8 @@ public class IA extends Joueur {
 			else 
 				defausse.add(carte);
 		}
-//		System.out.println(this.main);
 		Divinae.cimetiere.addAll(defausse);
 		this.main.removeAll(defausse);
-//		System.out.println(this.getNom());
-//		System.out.println(this.main);
-//		System.out.println(this.cartesApocalypses);
-//		System.out.println(this.cartesDeusEx);
-//		System.out.println(this.cartesGuides);
-//		System.out.println(this.cartesCroyants);
 	}
 	
 	private void trieCroyant(){
@@ -100,15 +91,18 @@ public class IA extends Joueur {
 					for (it = Divinae.table.iterator(); it.hasNext() && croyants.size() < g.getMaxCroyant();){
 						c = (Croyant) it.next();
 						for (Dogmes d : g.dogmes)
-							if(c.dogmes.contains(d))
+							if(c.dogmes.contains(d)){
 								croyants.add(c);
+								c.setLie(true);
+							}
 					}
 					g.ajoutCroyant(croyants);
 					Divinae.table.removeAll(croyants);
 					defausse.add(g);
 					this.plateau.add(g);
 					System.out.println(this.getNom() + " joue le Guide " + g );
-				
+					Divinae.checkJeuImediat();
+					Divinae.setJoueurCourant(this);
 				}
 			}
 			this.cartesGuides.removeAll(defausse);
@@ -126,6 +120,8 @@ public class IA extends Joueur {
 				if (this.checkJoueable(c.origine)){
 					defausse.add(c);
 					System.out.println(this.getNom() + " joue le Croyant " + c);
+					Divinae.checkJeuImediat();
+					Divinae.setJoueurCourant(this);
 					c.jouerCarteAction();
 				}
 			}
@@ -145,6 +141,8 @@ public class IA extends Joueur {
 				if (checkJoueable(d.origine)){
 					deusExs.add(d);
 					System.out.println(this.getNom() + " joue le Deus Ex " + d);
+					Divinae.checkJeuImediat();
+					Divinae.setJoueurCourant(this);
 					d.jouerCarteAction();
 				}
 			}
@@ -176,12 +174,14 @@ public class IA extends Joueur {
 	private void checkApocalypse(){
 		Iterator it;
 		Apocalypse a;
-		if (this.checkGagnant() && this.cartesApocalypses.size() > 0 && Divinae.getNbTours() > 1){
+		if (this.checkGagnant() && this.cartesApocalypses.size() > 0 && Divinae.getNbTours() > 1 && !Divinae.getApocalypseLance()){
 			for(it = this.cartesApocalypses.iterator(); it.hasNext();){
 				a = (Apocalypse) it.next();
 				if (this.checkJoueable(a.origine)){
 					it.remove();
 					System.out.println(this.getNom() + " joue l'Apocalypse " + a);
+					Divinae.checkJeuImediat();
+					Divinae.setJoueurCourant(this);
 					a.jouerCarteAction();
 				}
 			}
@@ -193,6 +193,7 @@ public class IA extends Joueur {
 		DeusEx d;
 		ArrayList<DeusEx> deusExs = new ArrayList<>();
 		
+		Divinae.setJoueurCourant(this);
 		for(it = this.cartesDeusEx.iterator(); it.hasNext();){
 			d = (DeusEx) it.next();
 			deusExs.add(d);
@@ -207,6 +208,7 @@ public class IA extends Joueur {
 		Croyant c;
 		Guide g;
 		
+		Divinae.setJoueurCourant(this);
 		if (this.cartesCroyants.size() > 1){
 			this.trieCroyant();
 			c = this.cartesCroyants.remove(this.cartesCroyants.size() - 1);
@@ -222,7 +224,6 @@ public class IA extends Joueur {
 		}
 		
 	}
-	
 	
 	private void joueDefensive(){
 		this.trieCroyant();
@@ -267,6 +268,8 @@ public class IA extends Joueur {
 				Divinae.table.removeAll(croyants);
 				this.plateau.add(g);
 				System.out.println(this.getNom() + " joue le Guide " + g );
+				Divinae.setJoueurCourant(this);
+				Divinae.checkJeuImediat();
 			}
 			defausse.add(g);
 		}
@@ -286,6 +289,7 @@ public class IA extends Joueur {
 		ArrayList<Guide> defausseGuides = new ArrayList<>();
 		ArrayList<Croyant> defausseCroyant = new ArrayList<>();
 		
+		Divinae.setJoueurCourant(this);
 		if (this.encorePtAction()){
 			this.trieGuide();
 			for(it = this.cartesGuides.iterator(); it.hasNext() && !sacrifie;){
@@ -294,7 +298,10 @@ public class IA extends Joueur {
 					sacrifie = true;
 					defausseGuides.add(g);
 					System.out.println(this.getNom() + " sacrifie et active le Guide " + g);
+					Divinae.checkJeuImediat();
+					Divinae.setJoueurCourant(this);
 					g.activeCapacite();
+					
 				}
 			}
 			this.cartesGuides.removeAll(defausseGuides);
@@ -308,6 +315,8 @@ public class IA extends Joueur {
 					sacrifie = true;
 					defausseCroyant.add(c);
 					System.out.println(this.getNom() + " sacrifie et active le Croyant " + c);
+					Divinae.checkJeuImediat();
+					Divinae.setJoueurCourant(this);
 					c.activeCapacite();
 				}
 			}
@@ -318,6 +327,7 @@ public class IA extends Joueur {
 	
 	@Override
 	public void defausse() {
+		Divinae.setJoueurCourant(this);
 		switch (this.typeIA){
 			case Defensive:
 				this.defausseDefensive();
@@ -337,6 +347,7 @@ public class IA extends Joueur {
 
 	@Override
 	public void jouerCarte() {
+		Divinae.setJoueurCourant(this);
 		switch (this.typeIA){
 		case Defensive:
 			this.joueDefensive();
@@ -356,6 +367,7 @@ public class IA extends Joueur {
 
 	@Override
 	public void activeCarte() {
+		Divinae.setJoueurCourant(this);
 		switch (this.typeIA){
 		case Defensive:
 			break;
@@ -384,6 +396,8 @@ public class IA extends Joueur {
 
 	@Override
 	public void tourJoueur() {
+		Divinae.setJoueurCourant(this);
+		
 		this.trieCartesMain();
 		System.out.println("Tours de " + this.getNom());
 		
@@ -399,6 +413,28 @@ public class IA extends Joueur {
 		System.out.println("sacrifie");
 		this.activeCarte();
 	}
+	
+	@Override
+	public void joueCarteImediat() {
+		Iterator it;
+		Apocalypse a;
+		ArrayList<Apocalypse> defausse = new ArrayList<>();
+		boolean continu = false;
+		
+		if (Divinae.getApocalypseLance()){
+			for (it = this.cartesApocalypses.iterator(); it.hasNext() && !continu;){
+				a = (Apocalypse) it.next();
+				if (this.checkJoueable(a.origine) && !continu){
+					a.jouerCarteAction();
+					defausse.add(a);
+					continu = true;
+				}
+			}
+			this.cartesApocalypses.removeAll(defausse);
+			this.main.removeAll(defausse);
+//			Divinae.cimetiere.addAll(defausse);
+		}
+	};
 	
 	public void gestionCapacite(){
 		// TODO Implemente here
@@ -426,6 +462,8 @@ public class IA extends Joueur {
 		Defensive,
 		Attaquante,
 		Mix
-	};
+	}
+
+	
 
 }

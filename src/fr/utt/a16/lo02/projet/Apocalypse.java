@@ -1,4 +1,4 @@
-package test;
+package fr.utt.a16.lo02.projet;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -18,11 +18,16 @@ public class Apocalypse extends Action {
     /**
      * @param return
      */
-    public void apocalypse() {
+    @Override
+    public void jouerCarteAction() {
+    	if (Divinae.getApocalypseLance()){
+    		Divinae.cimetiere.add(this);
+    		Divinae.setPremierJoueur(Divinae.getJoueurCourant());
+    	}
     int points[] = null;
     // calcul du nombre de joueurs
     int nbJoueur = Divinae.joueurs.size();
-    //On stocke les points de prière dans un tableau
+    //On stocke les points de priï¿½re dans un tableau
     Iterator<Joueur> it = Divinae.joueurs.iterator();
 	for (int i = 0; i < nbJoueur; i++){
 		for (Joueur j = it.next(); it.hasNext(); j = it.next()){
@@ -30,33 +35,34 @@ public class Apocalypse extends Action {
 		}
 	}
 	
-    if (nbJoueur < 4) {//4 joueurs ou plus : on élimine le joueur avec le moins de prière
+    if (nbJoueur < 4) {//4 joueurs ou plus : on ï¿½limine le joueur avec le moins de priï¿½re
     // calcul la valeur la plus grande du tableau
-    	int min = points[0]; // va récupérer la valeur la plus petite du tableau
-    	int j = 0; // va récupérer l'endoit où se situe cette valeur
+    	int min = points[0]; // va rï¿½cupï¿½rer la valeur la plus petite du tableau
+    	int j = 0; // va rï¿½cupï¿½rer l'endoit oï¿½ se situe cette valeur
     	for (int i = 0; i < nbJoueur; i++) {
     	if (points[i] < min) {
     		min = points[i];
     		j = i ; 
     		}
     	}
-    	System.out.println("Le joueur " + Divinae.joueurs.get(j) + " a remporté la partie !" );
-    	Divinae.partieEnCours = false ;
+    	System.out.println("Le joueur " + Divinae.joueurs.get(j) + " a remportï¿½ la partie !" );
+    	Divinae.setJoueurGangnant(Divinae.joueurs.get(j));
+    	Divinae.setPartieEnCours(false);
     }	
-    	else{//3 joueurs ou moins : le joueur ayant le plus de pts de prière gagne la partie
+    	else{//3 joueurs ou moins : le joueur ayant le plus de pts de priï¿½re gagne la partie
     		// calcul la valeur la plus petite du tableau  
-    		int max = points[0]; //va recupérer la valeur max du tableau
-    		int j = 0 ; //va récupérer l'endoit où se situe cette valeur
+    		int max = points[0]; //va recupï¿½rer la valeur max du tableau
+    		int j = 0 ; //va rï¿½cupï¿½rer l'endoit oï¿½ se situe cette valeur
     		for (int i = 0; i < nbJoueur; i++) {
     		if (points[i] > max) {
     			max = points[i];
     			 j = i ;    			
     		}
     		}
-    	System.out.println("Le joueur " + Divinae.joueurs.get(j) + " est éliminé de la partie !" );
+    	System.out.println("Le joueur " + Divinae.joueurs.get(j) + " est Ã©liminÃ©0 de la partie !" );
     	Divinae.joueurs.remove(j) ; //supprime le joueur
     	}
-    
+    	Divinae.setApocalypseLance(true);
     }
         // TODO implement here
     
@@ -80,9 +86,4 @@ public class Apocalypse extends Action {
     	creationApocalypse();
     }
 
-	@Override
-	public void jouerCarteAction() {
-		// TODO Auto-generated method stub
-		
-	}
 }

@@ -102,6 +102,8 @@ public abstract class Joueur {
      * @return
      */
     public abstract void tourJoueur();
+    
+    public abstract void joueCarteImediat();
 
     /**
      * @return

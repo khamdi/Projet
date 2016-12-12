@@ -112,6 +112,14 @@ public class Croyant extends Personnage {
 		return nbCroyant;
 	}
     
+    public void setLie(boolean lie){
+    	this.lie = lie;
+    }
+    
+    public boolean getLie(){
+    	return this.lie;
+    }
+    
     @Override
 	public void jouerCarteAction() {
 		Divinae.table.add(this);

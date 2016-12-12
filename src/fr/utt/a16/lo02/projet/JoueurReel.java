@@ -43,6 +43,7 @@ public class JoueurReel extends Joueur {
 		boolean defausser = true;
 		int reponse;
 		while (defausser){
+			Divinae.setJoueurCourant(this);
 			reponse = this.choixCarte("defaussé");
 			switch (reponse){
 				case -2:
@@ -68,6 +69,7 @@ public class JoueurReel extends Joueur {
 		
 		
 		while(this.encorePtAction() && continu){
+			Divinae.setJoueurCourant(this);
 			this.printAction();
 			reponse = this.choixCarte("jouer");
 			switch (reponse){
@@ -117,6 +119,7 @@ public class JoueurReel extends Joueur {
 				}
 				break;
 			}
+			Divinae.checkJeuImediat();
 		}
 	}
 	
@@ -132,6 +135,7 @@ public class JoueurReel extends Joueur {
 		Action carte;
 		
 		while(continu){
+			Divinae.setJoueurCourant(this);
 			this.printAction();
 			reponse = choixCarte("activer");
 			switch(reponse){
@@ -189,8 +193,9 @@ public class JoueurReel extends Joueur {
 							Divinae.cimetiere.add(carte);
 							break;
 					}
+					break;
 			}
-			
+			Divinae.checkJeuImediat();
 		}
 	}
 
@@ -198,6 +203,37 @@ public class JoueurReel extends Joueur {
 	public void piocheMain(Joueur joueur, int nbCarte) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	@Override
+	public void joueCarteImediat() {
+		Scanner sc = new Scanner(System.in);
+		
+		while(true){
+			System.out.println("Que voulez-vous faire ?");
+			System.out.println("Si vous voulez Jouer une Carte entrer [1], si vous souhaitez Sacrifier un carte entrer [2], Si vous voulez Utiliser la capacite de votre Divinite entrer [3]. \n si vous ne voulez rien faire entrer [0]");
+			Divinae.setJoueurCourant(this);
+			switch(sc.nextInt()){
+				case 0:
+					System.out.println("très bien vous ne voulez plus rien faire");
+					return;
+				case 1 : 
+					this.jouerCarte();
+					break;
+				case 2 :
+					this.activeCarte();
+					break;
+				case 3 :
+					if (!this.divinite.capaciteUtilise)
+						this.divinite.activeCapacite();
+					else
+						System.out.println("Vous avez déjà utilisé la capacite de votre Divinité. Vous ne pouvez l'utiliser qu'une fois pendant la partie.");
+					break;
+				default :
+					System.out.println("Nous n'avons pas compris votre reponse veuillez bien lire les choix possibles.");
+					break;
+			}
+		}
 	}
 
 	@Override
@@ -209,6 +245,7 @@ public class JoueurReel extends Joueur {
 		
 		this.defausse();
 		
+		Divinae.setJoueurCourant(this);
 		while (continu){
 			System.out.println("Voulez-vous remplir votre main ? o/n");
 			switch(sc.nextLine().toLowerCase()){
@@ -239,5 +276,7 @@ public class JoueurReel extends Joueur {
 		sb.append(super.toString());
 		return sb.toString();
 	}
+
+
 
 }

@@ -4,10 +4,14 @@ import java.util.*;
 
 
 public class Divinae {
-	private boolean partieEnCours;
-	private Joueur premierJoueur;
+	private static boolean partieEnCours;
+	private static Joueur premierJoueur;
 	private Origine origineTours;
 	private static int tour;
+	private static boolean apocalypseLance;
+	private static int tourApocalypseLance;
+	private static Joueur joueurGagnant;
+	private static Joueur joueurCourant;
 	public static List<Joueur> joueurs;
 	public static List<Croyant> table;
 	public static List<Action> cimetiere;
@@ -15,21 +19,56 @@ public class Divinae {
 	
 	
 	public Divinae(int nbJoueursR, int nbJoueursIA) {
-		this.partieEnCours = true;
+		setPartieEnCours(true);
 		this.origineTours = lanceDee();
-		this.tour = 0;
+		tour = 0;
 		Divinae.joueurs = new ArrayList<>();
 		Divinae.joueurs.addAll(creationJoueurs(nbJoueursR, nbJoueursIA));
-		this.premierJoueur = Divinae.joueurs.get(0);
+		premierJoueur = Divinae.joueurs.get(0);
+		Divinae.tourApocalypseLance = -1;
+		Divinae.apocalypseLance = false;
 		Divinae.table = new ArrayList<>();
 		Divinae.cimetiere = new ArrayList<>();
 		Divinae.paquet = new LinkedList<>();
 		Divinae.paquet.addAll(creationPaquet());
 		//fait dans jeu
-		this.distributDivinite();
-		this.distributCarteAction();
+//		this.distributDivinite();
+//		this.distributCarteAction();
 	}
 	
+	public static boolean getApocalypseLance(){
+		return apocalypseLance;
+	}
+	
+	public static void setApocalypseLance(boolean apocalypse){
+		apocalypseLance = apocalypse;
+		tourApocalypseLance = tour;
+	}
+	
+	public static Joueur getJoueurCourant(){
+		return joueurCourant;
+	}
+	
+	public static void setJoueurCourant(Joueur courant){
+		joueurCourant = courant;
+	}
+	
+	public static void setPremierJoueur(Joueur premier){
+		premierJoueur = premier;
+	}
+	
+	public static void setJoueurGangnant (Joueur gagnant){
+		joueurGagnant = gagnant;
+	}
+	
+	public boolean isPartieEnCours() {
+		return partieEnCours;
+	}
+
+	public static void setPartieEnCours(boolean partie) {
+		partieEnCours = partie;
+	}
+
 	public static int getNbTours(){
 		return Divinae.tour;
 	}
@@ -67,22 +106,27 @@ public class Divinae {
 		tmp.addAll(DeusEx.creationDeusEx());
 		
 		Collections.shuffle(tmp);
-//		System.out.println(tmp.size());
 		return tmp;
+	}
+	
+	private void resetAttributs(){
+		this.origineTours = lanceDee();
+		this.trieJoueur();
+		this.donPtAction();
+		if (getApocalypseLance() && tourApocalypseLance > (tour + 1))
+			setApocalypseLance(false);
+		tour ++;
 	}
 	
 	private Joueur jeu(){
 		this.distributDivinite();
 		this.distributCarteAction();
 		
-		while (this.partieEnCours){
-			this.origineTours = lanceDee();
-			this.trieJoueur();
-			this.donPtAction();
-			this.tour ++;
+		while (this.isPartieEnCours()){
+			this.resetAttributs();
 			this.tour();
 		}
-		return null;
+		return joueurGagnant;
 	}
 
 	private static Origine lanceDee(){
@@ -109,6 +153,7 @@ public class Divinae {
 			}
 		}
 		Divinae.joueurs = tmp;
+		this.premierJoueur = Divinae.joueurs.get(0);
 	}
 	
 	//pas finis 
@@ -140,12 +185,24 @@ public class Divinae {
 		}
 	}
 	
+	public static void checkJeuImediat(){
+		Iterator it;
+		Joueur j;
+		for (it = joueurs.iterator(); it.hasNext(); ){
+			j = (Joueur) it.next();
+			j.joueCarteImediat();
+		}
+			
+	}
+	
 	public void tour (){
 		Iterator itJoueur = Divinae.joueurs.iterator();
 		System.out.println("Nous somme en tour d'origine : " + this.origineTours);
-		this.donPtAction();
 		for (;itJoueur.hasNext();){
+			if (apocalypseLance)
+				break;
 			Joueur j = (Joueur) itJoueur.next();
+			joueurCourant = j;
 			j.tourJoueur();
 		}
 	}
@@ -208,12 +265,12 @@ public class Divinae {
     public static void main(String[] args) {
     	Divinae d = new Divinae(0,3);
 //    	System.out.println(d.paquet);
-    	System.out.println(Divinae.joueurs);
 //    	for (Joueur j : d.joueurs){
 //    		System.out.println(j.main);
 //    	}
 //    	System.out.println(d.paquet.size());
-    	d.tour();
+    	d.jeu();
+    	System.out.println(joueurGagnant);
     
     }
 
