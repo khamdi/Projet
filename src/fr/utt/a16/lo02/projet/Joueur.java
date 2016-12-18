@@ -1,7 +1,6 @@
 package fr.utt.a16.lo02.projet;
 
 import java.util.*;
-import fr.utt.a16.lo02.projet.Divinae.*;
 public abstract class Joueur {
 	/**
      * Default constructor
@@ -9,12 +8,12 @@ public abstract class Joueur {
     public Joueur(String nom, Types type) {
     	this.nom = nom;
     	this.gainPtAction = true;
-    	this.dejaJoue = false;
+    	this.setDejaJoue(false);
     	this.nbPriere = 0;
     	this.sacrificeCroyant = false;
     	this.sacrifieGuide = false;
-    	this.plateau = new ArrayList();
-    	this.main = new ArrayList();
+    	this.plateau = new ArrayList<Guide>();
+    	this.main = new ArrayList<Action>();
     	this.action = new int[3];
     	this.typeJoueur = type;
     }
@@ -104,6 +103,10 @@ public abstract class Joueur {
     public abstract void tourJoueur();
     
     public abstract void joueCarteImediat();
+    
+    public abstract void activeCarteCroyantForce();
+    
+    public abstract void activeCarteGuideForce();
 
     /**
      * @return
@@ -121,7 +124,7 @@ public abstract class Joueur {
 	}
     
     public boolean checkGagnant(){
-    	Iterator it;
+    	Iterator<?> it;
     	boolean gagnant = true;
     	Joueur j;
     	for (it = Divinae.joueurs.iterator(); it.hasNext();){
@@ -162,9 +165,9 @@ public abstract class Joueur {
      */
     public void calculerPriere() {
         int priere = 0;
-		for (Iterator it = plateau.iterator(); it.hasNext();){
+		for (Iterator<Guide> it = plateau.iterator(); it.hasNext();){
 			Guide g = (Guide) it.next();
-        	for (Iterator itCroyant = g.croyants.iterator(); itCroyant.hasNext();){
+        	for (Iterator<?> itCroyant = g.croyants.iterator(); itCroyant.hasNext();){
         		Croyant c = (Croyant) itCroyant.next();
         		priere += c.getNbCroyant();
         	}
@@ -176,7 +179,15 @@ public abstract class Joueur {
     	return this.nom;
     }
 
-    /**
+    public boolean isDejaJoue() {
+		return dejaJoue;
+	}
+
+	public void setDejaJoue(boolean dejaJoue) {
+		this.dejaJoue = dejaJoue;
+	}
+
+	/**
      * 
      */
     public enum Types {
@@ -188,5 +199,9 @@ public abstract class Joueur {
     	return this.nom + " : " + this.divinite.origine + " " + this.divinite.nomCarte;
     }
     public static void main(String[] args) {
+	}
+
+	public void setGainPtAction(boolean b) {
+		this.gainPtAction = b;
 	}
 }

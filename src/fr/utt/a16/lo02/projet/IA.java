@@ -36,11 +36,15 @@ public class IA extends Joueur {
 	}
 	
 	private void trieCartesMain(){
-		Iterator it;
+		Iterator<?> it;
 		Action carte;
 		ArrayList<Action> defausse = new ArrayList<>();
+		
+		this.viderListeCartes();
 		for(it = this.main.iterator(); it.hasNext();){
 			carte = (Action) it.next();
+			if (carte == null)
+				break;
 			if (checkOrigine(carte.origine)){
 				if (carte instanceof Croyant)
 					this.cartesCroyants.add((Croyant) carte);
@@ -76,28 +80,16 @@ public class IA extends Joueur {
 	}
 	
 	private void joueGuide(){
-		Iterator it;
+		Iterator<?> it;
 		Guide g;
 		Croyant c;
 		ArrayList<Guide> defausse = new ArrayList<>();
+		int i = 0;
 		
 		if(this.encorePtAction()){
-			for(it = this.cartesGuides.iterator(); it.hasNext();){
+			for(it = this.cartesGuides.iterator(); it.hasNext() && i < this.cartesGuides.size();i++){
 				g = (Guide) it.next();
 				if(this.checkJoueable(g.origine)){
-					
-					Divinae.trieTable();
-					ArrayList<Croyant> croyants = new ArrayList<>();
-					for (it = Divinae.table.iterator(); it.hasNext() && croyants.size() < g.getMaxCroyant();){
-						c = (Croyant) it.next();
-						for (Dogmes d : g.dogmes)
-							if(c.dogmes.contains(d)){
-								croyants.add(c);
-								c.setLie(true);
-							}
-					}
-					g.ajoutCroyant(croyants);
-					Divinae.table.removeAll(croyants);
 					defausse.add(g);
 					this.plateau.add(g);
 					System.out.println(this.getNom() + " joue le Guide " + g );
@@ -105,13 +97,30 @@ public class IA extends Joueur {
 					Divinae.setJoueurCourant(this);
 				}
 			}
+			
+			for (i = 0; i < defausse.size(); i++){
+				
+				Divinae.trieTable();
+				ArrayList<Croyant> croyants = new ArrayList<>();
+				for (it = Divinae.table.iterator(); it.hasNext() && croyants.size() < defausse.get(i).getMaxCroyant();){
+					c = (Croyant) it.next();
+					for (Dogmes d : defausse.get(i).dogmes)
+						if(c.dogmes.contains(d)){
+							croyants.add(c);
+							c.setLie(true);
+						}
+				}
+				defausse.get(i).ajoutCroyant(croyants);
+				Divinae.table.removeAll(croyants);
+				this.plateau.add(defausse.get(i));
+			}
 			this.cartesGuides.removeAll(defausse);
 			this.main.removeAll(defausse);
 		}
 	}
 	
 	private void joueCroyant(){
-		Iterator it;
+		Iterator<?> it;
 		Croyant c;
 		ArrayList<Croyant> defausse = new ArrayList<>();
 		if (this.encorePtAction()){
@@ -131,7 +140,7 @@ public class IA extends Joueur {
 	}
 	
 	private void joueDeusEx(){
-		Iterator it;
+		Iterator<?> it;
 		DeusEx d;
 		ArrayList<DeusEx> deusExs = new ArrayList<>();
 		
@@ -172,14 +181,14 @@ public class IA extends Joueur {
 	}
 	
 	private void checkApocalypse(){
-		Iterator it;
+		Iterator<Apocalypse> it;
 		Apocalypse a;
-		if (this.checkGagnant() && this.cartesApocalypses.size() > 0 && Divinae.getNbTours() > 1 && !Divinae.getApocalypseLance()){
+		if (this.checkGagnant() && this.cartesApocalypses.size() > 0 && Divinae.getNbTours() > 1 && !Divinae.getApocalypseLance() && this.nbPriere > 0){
 			for(it = this.cartesApocalypses.iterator(); it.hasNext();){
 				a = (Apocalypse) it.next();
 				if (this.checkJoueable(a.origine)){
-					it.remove();
 					System.out.println(this.getNom() + " joue l'Apocalypse " + a);
+					Divinae.setApocalypseLance(true);
 					Divinae.checkJeuImediat();
 					Divinae.setJoueurCourant(this);
 					a.jouerCarteAction();
@@ -189,7 +198,7 @@ public class IA extends Joueur {
 	}
 	
 	private void defausseDefensive(){
-		Iterator it;
+		Iterator<?> it;
 		DeusEx d;
 		ArrayList<DeusEx> deusExs = new ArrayList<>();
 		
@@ -213,14 +222,14 @@ public class IA extends Joueur {
 			this.trieCroyant();
 			c = this.cartesCroyants.remove(this.cartesCroyants.size() - 1);
 			System.out.println(this.getNom() + " se defausse de son Croyant " + c);
-			Divinae.cimetiere.add(this.main.remove(this.main.indexOf(c)));
+			Divinae.cimetiere.add(c);
 		}
 		
 		if (this.cartesGuides.size() > 1){
 			this.trieGuide();
 			g = this.cartesGuides.remove(this.cartesGuides.size() - 1);
 			System.out.println(this.getNom() + " se defausse de son Guide " + g);
-			Divinae.cimetiere.add(this.main.remove(this.main.indexOf(g)));
+			Divinae.cimetiere.add(g);
 		}
 		
 	}
@@ -239,7 +248,7 @@ public class IA extends Joueur {
 	}
 	
 	private void joueAttaquante(){
-		Iterator it;
+		Iterator<?> it;
 		Guide g;
 		Croyant c;
 		ArrayList<Guide> defausse = new ArrayList<>();
@@ -281,7 +290,7 @@ public class IA extends Joueur {
 	}
 	
 	private void activeAttaquante(){
-		Iterator it;
+		Iterator<?> it;
 		Guide g;
 		Croyant c;
 		boolean sacrifie = false;
@@ -394,9 +403,18 @@ public class IA extends Joueur {
 		this.trieCartesMain();
 	}
 
+	private void viderListeCartes(){
+		this.cartesApocalypses.clear();
+		this.cartesDeusEx.clear();
+		this.cartesGuides.clear();
+		this.cartesCroyants.clear();
+	}
+	
 	@Override
 	public void tourJoueur() {
 		Divinae.setJoueurCourant(this);
+		
+		this.viderListeCartes();
 		
 		this.trieCartesMain();
 		System.out.println("Tours de " + this.getNom());
@@ -416,7 +434,7 @@ public class IA extends Joueur {
 	
 	@Override
 	public void joueCarteImediat() {
-		Iterator it;
+		Iterator<Apocalypse> it;
 		Apocalypse a;
 		ArrayList<Apocalypse> defausse = new ArrayList<>();
 		boolean continu = false;
@@ -425,6 +443,7 @@ public class IA extends Joueur {
 			for (it = this.cartesApocalypses.iterator(); it.hasNext() && !continu;){
 				a = (Apocalypse) it.next();
 				if (this.checkJoueable(a.origine) && !continu){
+					System.out.println(this.getNom() + " joue directement " + a);
 					a.jouerCarteAction();
 					defausse.add(a);
 					continu = true;
@@ -432,7 +451,6 @@ public class IA extends Joueur {
 			}
 			this.cartesApocalypses.removeAll(defausse);
 			this.main.removeAll(defausse);
-//			Divinae.cimetiere.addAll(defausse);
 		}
 	};
 	
@@ -462,6 +480,19 @@ public class IA extends Joueur {
 		Defensive,
 		Attaquante,
 		Mix
+	}
+
+	@Override
+	public void activeCarteCroyantForce() {
+		if(this.plateau.size() > 0){
+			this.plateau.get(0).croyants.get(0).activeCapacite();
+		}
+	}
+
+	@Override
+	public void activeCarteGuideForce() {
+		// TODO Auto-generated method stub
+		
 	}
 
 	

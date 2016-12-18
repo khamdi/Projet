@@ -48,7 +48,7 @@ public abstract class Carte {
     
     @Override
     public String toString() {
-    	return this.origine + " " + nomCarte ;
+    	return this.typeCarte + " " + this.origine + " " + nomCarte ;
     }
 
 }

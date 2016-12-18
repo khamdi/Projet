@@ -6,7 +6,7 @@ import java.util.*;
 public class Divinae {
 	private static boolean partieEnCours;
 	private static Joueur premierJoueur;
-	private Origine origineTours;
+	private static Origine origineTours;
 	private static int tour;
 	private static boolean apocalypseLance;
 	private static int tourApocalypseLance;
@@ -20,7 +20,7 @@ public class Divinae {
 	
 	public Divinae(int nbJoueursR, int nbJoueursIA) {
 		setPartieEnCours(true);
-		this.origineTours = lanceDee();
+		origineTours = lanceDee();
 		tour = 0;
 		Divinae.joueurs = new ArrayList<>();
 		Divinae.joueurs.addAll(creationJoueurs(nbJoueursR, nbJoueursIA));
@@ -49,6 +49,10 @@ public class Divinae {
 		return joueurCourant;
 	}
 	
+	public static void setOrigineTour(Origine o){
+		origineTours = o;
+	}
+	
 	public static void setJoueurCourant(Joueur courant){
 		joueurCourant = courant;
 	}
@@ -58,6 +62,7 @@ public class Divinae {
 	}
 	
 	public static void setJoueurGangnant (Joueur gagnant){
+		partieEnCours = false;
 		joueurGagnant = gagnant;
 	}
 	
@@ -110,11 +115,15 @@ public class Divinae {
 	}
 	
 	private void resetAttributs(){
-		this.origineTours = lanceDee();
+		origineTours = lanceDee();
 		this.trieJoueur();
 		this.donPtAction();
 		if (getApocalypseLance() && tourApocalypseLance > (tour + 1))
 			setApocalypseLance(false);
+		if (paquet.size() == 0){
+			paquet = creationPaquet();
+			cimetiere.clear();
+		}
 		tour ++;
 	}
 	
@@ -129,7 +138,7 @@ public class Divinae {
 		return joueurGagnant;
 	}
 
-	private static Origine lanceDee(){
+	public static Origine lanceDee(){
 		switch(new Random().nextInt(3)){
 			case 0 :
 				return Origine.Jour;
@@ -142,7 +151,7 @@ public class Divinae {
 	
 	private void trieJoueur(){
 		int i;
-		int j = Divinae.joueurs.indexOf(this.premierJoueur);
+		int j = Divinae.joueurs.indexOf(premierJoueur);
 		ArrayList<Joueur> tmp = new ArrayList<>();
 		for(i = 0; i < Divinae.joueurs.size();i++){
 			if (j + i < Divinae.joueurs.size())
@@ -153,16 +162,15 @@ public class Divinae {
 			}
 		}
 		Divinae.joueurs = tmp;
-		this.premierJoueur = Divinae.joueurs.get(0);
+		premierJoueur = Divinae.joueurs.get(0);
 	}
-	
-	//pas finis 
+
 	private void donPtAction(){
 		Iterator<Joueur> it = Divinae.joueurs.iterator();
 		Joueur j;
 		for (; it.hasNext();){
 			j = it.next();
-			switch (this.origineTours){
+			switch (origineTours){
 				case Jour :
 					if (j.divinite.origine == Origine.Jour)
 						j.action[Origine.Jour.ordinal()] = 2;
@@ -187,20 +195,24 @@ public class Divinae {
 	
 	public static void checkJeuImediat(){
 		Iterator it;
-		Joueur j;
+		Joueur j, jCourant;
+		jCourant = getJoueurCourant();
 		for (it = joueurs.iterator(); it.hasNext(); ){
 			j = (Joueur) it.next();
-			j.joueCarteImediat();
+			if (!jCourant.equals(j))
+				j.joueCarteImediat();
 		}
 			
 	}
 	
 	public void tour (){
 		Iterator itJoueur = Divinae.joueurs.iterator();
-		System.out.println("Nous somme en tour d'origine : " + this.origineTours);
+		System.out.println("Nous somme en tour d'origine : " + origineTours);
 		for (;itJoueur.hasNext();){
 			if (apocalypseLance)
 				break;
+			if (!partieEnCours)
+				return;
 			Joueur j = (Joueur) itJoueur.next();
 			joueurCourant = j;
 			j.tourJoueur();
@@ -253,25 +265,24 @@ public class Divinae {
     }
     
     public static Action piocherCarte() {
-		if(!paquet.isEmpty()){
-			Action carte = paquet.poll();
-			carte.setEnMain();
-			return carte;
-		}
-			
-		return null;
+		if(paquet.isEmpty())
+			paquet = creationPaquet();
+		Action carte = paquet.poll();
+		carte.setEnMain();
+		return carte;
 	}
     
     public static void main(String[] args) {
-    	Divinae d = new Divinae(0,3);
-//    	System.out.println(d.paquet);
-//    	for (Joueur j : d.joueurs){
-//    		System.out.println(j.main);
-//    	}
-//    	System.out.println(d.paquet.size());
+    	Scanner sc = new Scanner(System.in);
+    	int reel, ia;
+    	System.out.println("Combien de joueur Reel voulez vous pour la partie ?");
+    	reel = sc.nextInt();
+    	System.out.println("Combien de joueur Virtuel (IA) voulez vous pour la partie ?");
+    	ia = sc.nextInt();
+    	Divinae d = new Divinae(reel,ia);
     	d.jeu();
-    	System.out.println(joueurGagnant);
-    
+    	System.out.println("Le gagnant est : ");
+    	System.out.println(joueurGagnant + " felicitation!");
     }
 
 	

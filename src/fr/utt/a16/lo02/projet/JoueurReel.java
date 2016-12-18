@@ -241,7 +241,7 @@ public class JoueurReel extends Joueur {
 		Scanner sc = new Scanner(System.in);
 		boolean continu = true;
 		
-		System.out.println("Tours de : " + this.getNom());
+		System.out.println("Tours de : " + this);
 		
 		this.defausse();
 		
@@ -275,6 +275,53 @@ public class JoueurReel extends Joueur {
 		sb.append("Joueur Reel - ");
 		sb.append(super.toString());
 		return sb.toString();
+	}
+
+	@Override
+	public void activeCarteCroyantForce() {
+		boolean fait = false;
+		int reponse;
+		while (!fait){
+			System.out.println("Choisissez une carte Croyant a active de force");
+			reponse = this.choixCarte("Croyant forcer ");
+			switch (reponse){
+				case -2 :
+				case -1 :
+					System.out.println("Veuillez recommencer");
+					break;
+				default :
+					if (this.main.get(reponse) instanceof Croyant){
+						this.main.get(reponse).activeCapacite();
+						Divinae.cimetiere.add(this.main.remove(reponse));
+						fait = true;
+					}
+					break;						
+			}	
+		}
+	}
+
+	@Override
+	public void activeCarteGuideForce() {
+		boolean fait = false;
+		int reponse;
+		while (!fait){
+			System.out.println("Choisissez une carte Guide a active de force");
+			reponse = this.choixCarte("Guide forcer ");
+			switch (reponse){
+				case -2 :
+				case -1 :
+					System.out.println("Veuillez recommencer");
+					break;
+				default :
+					if (this.main.get(reponse) instanceof Guide){
+						this.main.get(reponse).activeCapacite();
+						Divinae.cimetiere.add(this.main.remove(reponse));
+						fait = true;
+					}
+					break;						
+			}	
+		}
+		
 	}
 
 

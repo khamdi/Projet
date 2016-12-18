@@ -30,7 +30,6 @@ public class Divinite extends Carte {
      */
     public List<Dogmes> dogmes;
     
-  //pb   
     public static ArrayList<Divinite> creationDivinite(){
     	ArrayList<Divinite> tmp = new ArrayList<>();
     	int numCarte = DEBUTNUMCARTE;
@@ -52,98 +51,7 @@ public class Divinite extends Carte {
 		return tmp;
     }
 
-    /**
-     * @param joueur 
-     * @param carteApocalypste 
-     * @return
-     */
-    public void capaciteBrawalen(Joueur joueur, Apocalypse carteApocalypste) {
-//peut emp�cher l'utilisation d'une carte Apocalypse.La carte est d�fauss�e
-    }
-
-    /**
-     * @param joueur 
-     * @param carteGuide 
-     * @return
-     */
-    public void capaciteShingva(Joueur joueur, Guide carteGuide) {
-//Peut imposer le sacrifice d'un Guide Spirituel ayant le Dogme Symboles ou Nature
-    }
-
-    /**
-     * @param joueur 
-     * @return
-     */
-    public void capaciteLlewella(Joueur joueur) {
-//Peut obliger un joueur � poser une carte Apocalypse s'il en poss�de une
-    	if (joueur.main.contains(typeCarte.Apocalypse) == true) {
-    		//Apocalypse.creation() ; chercher la carte et l'activer;
-    	  }
-    }
-
-    /**
-     * @param joueur 
-     * @param carteGuide 
-     * @return
-     */
-    public void capaciteDrinded(Joueur joueur, Guide carteGuide) {
-//peut emp�cher le sacrifice d'un des Guides Spirituels de n'importe quel joueur
-    }
-
-    /**
-     * @param joueur 
-     * @return
-     */
-    public void capaciteGorpa(Joueur joueur) {
-//Peut r�cup�rer les points d'Action d'une autre Divinit� en plus des siens. L'autre Divinit� ne
-//re�oit aucun point d'Action ce tour-ci.
- 
-    }
-
-    /**
-     * @return
-     */
-    public void capacitePuiTara() {
-//Peut d�truire toutes les cartes de Croyants au centre de la table d'Origine Jour
-    }
-
-    /**
-     * @return
-     */
-    public void capaciteYarstur() {
-//Peut d�truire toutes les cartes de Croyants au centre de la table d'Origine N�ant.
- Divinae.cimetiere.addAll(null);
-    }
-
-    /**
-     * @param joueur 
-     * @return
-     */
-    public void capaciteRomtec(Joueur joueur) {
-//Peut emp�cher un jour de cr�er un Guide Spirituel. La carte est d�fauss�e
-    }
-
-    /**
-     * @param joueur 
-     * @return
-     */
-    public void capaciteGwenghelen(Joueur joueur) {
-//R�cup�re autant de points d'Action suppl�mentaires d'Origine N�ant que le nombre de
-//Guides Spirituels que la Divinit� poss�de.
-joueur.action[2] += joueur.plateau.size();
-    }
-
-    /**
-     * @param joueur 
-     * @return
-     */
-    public void capaciteKillinstred(Joueur joueur) {
-//peut obliger un joueur � poser une carte Apocalypse s'il en poss�de une.
-if (joueur.main.contains(typeCarte.Apocalypse) == true) {
-//	Apocalypse.apocalypse() ; Pareil 
-  }
-    }
-    
+   
     @Override
 	public void activeCapacite() {
 		// TODO Auto-generated method stub
@@ -155,14 +63,4 @@ if (joueur.main.contains(typeCarte.Apocalypse) == true) {
     	// TODO Auto-generated method stub
     	return super.toString() + " " + this.description + " ]";
     }
-    
-    public static void main(String[] args) {
-//		Divinite d = new Divinite(Origine.Aube, "Beau gosse", 0, "ae", null);
-//		System.out.println(d);
-    	
-    	creationDivinite();
-    	
-	}
-
-	
 }
